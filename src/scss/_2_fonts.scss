@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Yu Gothic
+   ========================================================================== */
+@font-face {
+  font-family: "xYuGothic";
+  font-weight: normal;
+  src: local( "YuGothic-Medium" ),  /* win postscript */
+       local( "Yu Gothic Medium" ), /* win fill name (for Chrome) */
+       local( "YuGo-Medium" ),      /* mac postscript */
+       local( "YuGothic Medium" ),  /* mac fill name (for Chrome) */
+       local( "YuGothic-Regular" ), /* Win8.1 (no Medium) */
+       local( "Yu Gothic" );        /* family name */
+}
+@font-face {
+  font-family: "xYuGothic";
+  font-weight: bold;
+  src: local( "YuGothic-Bold" ),  /* win postscript */
+       local( "Yu Gothic Bold" ), /* win fill name (for Chrome) */
+       local( "YuGo-Bold" ),      /* mac postscript */
+       local( "YuGothic Bold" ),  /* mac fill name (for Chrome) */
+       local( "Yu Gothic" );      /* family name */
+}
+
+/* ==========================================================================
+   Yu Mincho
+   ========================================================================== */
+@font-face {
+  font-family: "xYuMincho";
+  font-weight: normal;
+  src: local( "YuMincho-Regular" ),  /* win postscript */
+       local( "Yu Mincho Regular" ), /* win fill name (for Chrome) */
+       local( "YuMin-Medium" ),      /* mac postscript */
+       local( "YuMincho Medium" ),   /* mac fill name (for Chrome) */
+       local( "Yu Mincho" );         /* family name */
+}
+
+@font-face {
+  font-family: "xYuMincho";
+  font-weight: bold;
+  src: local( "YuMincho-Demibold" ),  /* win postscript */
+       local( "Yu Mincho Demibold" ), /* win fill name (for Chrome) */
+       local( "YuMin-Demibold" ),     /* mac postscript */
+       local( "YuMincho Demibold" ),  /* mac fill name (for Chrome) */
+       local( "Yu Mincho" );          /* family name */
+}

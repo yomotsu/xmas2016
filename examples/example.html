@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+</head>
+<body>
+
+<script src="./libs/three.min.js"></script>
+<script src="./libs/OrbitControls.js"></script>
+<script src="./libs/cannon.min.js"></script>
+<script>
+
+'use strict';
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+const clock = new THREE.Clock();
+const loader = new THREE.JSONLoader();
+
+// cannon
+const world = new CANNON.World();
+world.broadphase = new CANNON.NaiveBroadphase();
+world.gravity.set( 0, -10, 0 );
+
+// three
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 24, width / height, 1, 1000 );
+camera.position.set( 20, 20, 20 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( width, height );
+document.body.appendChild( renderer.domElement );
+
+const controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.target.set( 0, 5, 0 );
+controls.minDistance = 5;
+controls.maxDistance = 60;
+controls.maxPolarAngle = 100 * THREE.Math.DEG2RAD;
+controls.enableDamping = true;
+controls.dampingFactor = 0.1;
+controls.zoomSpeed = 0.5;
+controls.rotateSpeed = 0.5;
+
+scene.add( new THREE.HemisphereLight( 0x333344, 0x222233, 2 ) );
+
+const groundShape = new CANNON.Box( new CANNON.Vec3( 10, .2, 10 ) );
+const groundBody = new CANNON.Body( { mass: 0 } );
+groundBody.addShape( groundShape );
+world.add( groundBody );
+const groundGeometry = new THREE.BoxGeometry(
+	groundShape.halfExtents.x * 2,
+	groundShape.halfExtents.y * 2,
+	groundShape.halfExtents.z * 2
+);
+scene.add( new THREE.Mesh( groundGeometry ) );
+
+
+const sphereShape = new CANNON.Sphere( 4 );
+const sphereBody = new CANNON.Body( { mass: 0 } );
+sphereBody.addShape( sphereShape );
+world.add( sphereBody );
+const sphereGeometry = new THREE.SphereGeometry( sphereShape.radius, 8, 8 );
+scene.add( new THREE.Mesh( sphereGeometry ) );
+
+
+const debugVisuals = {
+
+	_: [],
+
+	add ( body ) {
+
+		const shape = body.shapes[ 0 ];
+		const box_geometry = new THREE.BoxGeometry(
+			shape.halfExtents.x * 2,
+			shape.halfExtents.y * 2,
+			shape.halfExtents.z * 2
+		);
+		const mesh = new THREE.Mesh( box_geometry );
+
+		scene.add( mesh );
+		mesh.material.wireframe = true;
+
+		debugVisuals._.push( {
+			body: body,
+			visual: mesh
+		} );
+
+	},
+
+	update () {
+
+		debugVisuals._.forEach( ( el ) => {
+			
+			el.visual.position.copy( el.body.position );
+			el.visual.quaternion.copy( el.body.quaternion );
+
+		} );
+
+	}
+
+}
+
+
+const position = new CANNON.Vec3( 0, 10, 0 );
+const scale = 2;
+const body = createRagdoll( position, scale );
+
+
+loader.load( 'example.json', ( geometry, materials ) => {
+
+	materials[ 0 ].skinning = true;
+
+	const mesh = new THREE.SkinnedMesh(
+		geometry,
+		new THREE.MultiMaterial( materials )
+	);
+	mesh.position.set( 2, 0, 0 );
+	scene.add( mesh );
+
+	const bones = mesh.skeleton.bones;
+	const skelton = {
+		body   : bones.find( ( b ) => { return b.name === 'body' } ),
+		pelvis : bones.find( ( b ) => { return b.name === 'pelvis' } ),
+		legR   : bones.find( ( b ) => { return b.name === 'legR' } ),
+		legL   : bones.find( ( b ) => { return b.name === 'legL' } ),
+	};
+
+
+	( function anim () {
+
+		const delta   = clock.getDelta();
+		const elapsed = clock.getElapsedTime();
+
+		if ( 40 < elapsed ) { return; }
+		requestAnimationFrame( anim );
+		world.step( delta );
+		debugVisuals.update();
+
+		skelton.body.position.copy( body.upperBody.position )
+		skelton.body.quaternion.copy( body.upperBody.quaternion );
+
+		skelton.pelvis.position.copy( body.pelvis.position )
+		skelton.pelvis.quaternion.copy( body.pelvis.quaternion );
+
+		skelton.legL.position.copy( body.leftLeg.position )
+		skelton.legL.quaternion.copy( body.leftLeg.quaternion );
+
+		skelton.legR.position.copy( body.rightLeg.position )
+		skelton.legR.quaternion.copy( body.rightLeg.quaternion );
+		
+		controls.update();
+		renderer.render( scene, camera );
+
+	} )();
+
+} );
+
+
+
+
+
+function createRagdoll ( position, scale ) {
+
+	const angleA     = Math.PI / 4;
+	const angleB     = Math.PI / 3; 
+	const twistAngle = Math.PI / 8;
+
+	const body = {};
+
+	const mass = 5; // Kg
+
+	const shouldersDistance = 0.5 * scale,
+	      upperBodyLength   = 0.6 * scale,
+	      bodyDepth         = 0.2 * scale,
+	      pelvisLength      = 0.4 * scale,
+	      legLength         = 0.5 * scale,
+	      legSize           = 0.2 * scale;
+
+
+	const upperBodyShape = new CANNON.Box(
+		new CANNON.Vec3(
+			shouldersDistance * 0.5,
+			upperBodyLength   * 0.5,
+			bodyDepth         * 0.5
+		)
+	);
+
+	const pelvisShape    = new CANNON.Box(
+		new CANNON.Vec3(
+			shouldersDistance * 0.5,
+			pelvisLength      * 0.5,
+			bodyDepth         * 0.5
+		)
+	);
+
+	const legShape  = new CANNON.Box(
+		new CANNON.Vec3(
+			legSize   * 0.5,
+			legLength * 0.5,
+			bodyDepth * 0.5
+		)
+	);
+
+	// legs
+	body.leftLeg = new CANNON.Body( {
+		mass: mass,
+		position: new CANNON.Vec3(
+			-shouldersDistance / 2,
+			legLength / 2,
+			0
+		),
+	} );
+
+	body.rightLeg = new CANNON.Body( {
+		mass: mass,
+		position: new CANNON.Vec3(
+			shouldersDistance / 2,
+			legLength / 2,
+			0
+		),
+	} );
+
+	body.leftLeg.addShape( legShape );
+	body.rightLeg.addShape( legShape );
+	world.addBody( body.leftLeg );
+	world.addBody( body.rightLeg );
+
+	debugVisuals.add( body.leftLeg );
+	debugVisuals.add( body.rightLeg );
+
+	// Pelvis
+	body.pelvis = new CANNON.Body( {
+		mass: mass,
+		position: new CANNON.Vec3(
+			0,
+			body.leftLeg.position.y + legLength / 2 + pelvisLength / 2,
+			0
+		),
+	} );
+	body.pelvis.addShape( pelvisShape );
+	world.addBody( body.pelvis );
+	debugVisuals.add( body.pelvis );
+
+	// Upper body
+	body.upperBody = new CANNON.Body( {
+		mass: mass,
+		position: new CANNON.Vec3(
+			0,
+			body.pelvis.position.y + pelvisLength / 2 + upperBodyLength / 2,
+			0
+		),
+	} );
+	body.upperBody.addShape(upperBodyShape);
+	world.addBody(body.upperBody);
+	debugVisuals.add( body.upperBody );
+
+
+	// Hip joints
+	const leftHipJoint = new CANNON.ConeTwistConstraint(
+		body.leftLeg,
+		body.pelvis,
+		{
+			pivotA: new CANNON.Vec3( 0, legLength / 2, 0 ),
+			pivotB: new CANNON.Vec3( -shouldersDistance / 2, -pelvisLength /2, 0 ),
+			axisA: CANNON.Vec3.UNIT_Y,
+			axisB: CANNON.Vec3.UNIT_Y,
+			angle: angleA,
+			twistAngle: twistAngle
+		}
+	);
+
+	const rightHipJoint = new CANNON.ConeTwistConstraint(
+		body.rightLeg,
+		body.pelvis,
+		{
+			pivotA: new CANNON.Vec3( 0, legLength / 2, 0 ),
+			pivotB: new CANNON.Vec3( shouldersDistance / 2, -pelvisLength /2, 0 ),
+			axisA: CANNON.Vec3.UNIT_Y,
+			axisB: CANNON.Vec3.UNIT_Y,
+			angle: angleA,
+			twistAngle: twistAngle
+		}
+	);
+	world.addConstraint( leftHipJoint );
+	world.addConstraint( rightHipJoint );
+
+	// Spine
+	const spineJoint = new CANNON.ConeTwistConstraint(
+		body.pelvis,
+		body.upperBody,
+		{
+			pivotA: new CANNON.Vec3( 0, pelvisLength / 2, 0 ),
+			pivotB: new CANNON.Vec3( 0, -upperBodyLength / 2, 0 ),
+			axisA: CANNON.Vec3.UNIT_Y,
+			axisB: CANNON.Vec3.UNIT_Y,
+			angle: angleA,
+			twistAngle: twistAngle
+		}
+	);
+	world.addConstraint( spineJoint );
+
+
+	for ( let i in body ) {
+
+		body[ i ].position.vadd( position, body[ i ].position );
+
+	}
+
+	return body;
+
+}
+</script>
+</body>
+</html>

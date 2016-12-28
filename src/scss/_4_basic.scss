@@ -1,0 +1,96 @@
+/* ==========================================================================
+   for styleguide
+   ========================================================================== */
+.DEBUG{
+  color: #FFF;
+  font-size: 16px;
+  font-family: $fontSansSerif;
+  padding: 5px;
+  margin: 1em 0;
+  background: orange;
+}
+
+#__bs_notify__{
+  pointer-events: none;
+}
+
+// メディアクエリ巻き上げ順調整
+_x{
+  @include ie8    { _x:0 }
+  @include ie9    { _x:1 }
+  @include mediaL { _x:2 }
+  @include mediaM { _x:3 }
+  @include mediaS { _x:4 }
+}
+
+/* modifier: align
+   ========================================================================== */
+.#{$NS}--alignLeft   {text-align:left !important; }
+.#{$NS}--alignRight  {text-align:right !important; }
+.#{$NS}--alignCenter {text-align:center !important; }
+.#{$NS}--alignTop    {vertical-align:top !important; }
+.#{$NS}--alignMiddle {vertical-align:middle !important; }
+.#{$NS}--alignBottom {vertical-align:bottom !important; }
+
+/* modifier: display
+   ========================================================================== */
+:root .#{$NS}--disableLargeScreen{display:none;}
+
+@media screen and ( max-width: $breakpoint-middle ) and ( min-width: $breakpoint-small + 1 )  {
+  :root .#{$NS}--disableLargeScreen  {display: block;}
+  :root .#{$NS}--disableMiddleScreen {display: none !important;}
+  :root .#{$NS}--disableSmallScreen  {display: block;}
+
+  :root span.#{$NS}--disableLargeScreen,
+  :root br.#{$NS}--disableLargeScreen  {display: inline;}
+  :root span.#{$NS}--disableMiddleScreen,
+  :root br.#{$NS}--disableMiddleScreen {display: none !important;}
+  :root span.#{$NS}--disableSmallScreen,
+  :root br.#{$NS}--disableSmallScreen  {display: inline;}
+}
+
+@include mediaS {
+  :root .#{$NS}--disableLargeScreen  {display: block;}
+  :root .#{$NS}--disableMiddleScreen {display: block;}
+  :root .#{$NS}--disableSmallScreen  {display: none !important;}
+
+  :root span.#{$NS}--disableLargeScreen,
+  :root br.#{$NS}--disableLargeScreen  {display: inline;}
+  :root span.#{$NS}--disableMiddleScreen,
+  :root br.#{$NS}--disableMiddleScreen {display: inline;}
+  :root span.#{$NS}--disableSmallScreen,
+  :root br.#{$NS}--disableSmallScreen  {display: none !important;}
+}
+
+/* ==========================================================================
+   general style
+   ========================================================================== */
+::-moz-selection {background: rgba( #ccc, .6 ); text-shadow: none; }
+::selection      {background: rgba( #ccc, .6 ); text-shadow: none; }
+
+html{
+  color: #242424;
+  font-family: $fontSansSerif;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body{
+  margin: 0;
+}
+
+a{
+  transition: color .2s;
+  &:hover,
+  &:active{
+    transition: color 0s;
+  }
+}
+
+input, button{
+  font-family: inherit;
+}

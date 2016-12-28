@@ -1,0 +1,11 @@
+node_modules/
+build/
+*.log
+
+.cache
+.DS_Store
+
+npm-debug.log
+Thumbs.db
+config.rb
+_notes

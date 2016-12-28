@@ -1,0 +1,28 @@
+
+// ==========================================================================
+//  vars
+// ==========================================================================
+$NS: "xmas2016";
+
+$fontSansSerif : "Josefin Sans",
+                 "xYuGothic",
+                 "Hiragino Kaku Gothic ProN",
+                 "Hiragino Kaku Gothic Pro",
+                 Meiryo,
+                 sans-serif;
+$fontSerif : "xYuMincho",
+             "HiraMinProN-W3",
+             "Hiragino Mincho Pro",
+             "\0048\0047\6B63\6977\66F8\4F53\002D\0050\0052\004F",
+             "\FF24\FF26\4E2D\6977\66F8\4F53",
+             "\FF2D\FF33\0020\660E\671D",
+             "MS Mincho",
+             serif;
+
+$pageMaxWidth      : 1200px;
+$breakpoint-base   : 980px - 1;
+$breakpoint-middle : 768px - 1;
+$breakpoint-small  : 640px - 1;
+
+$z-pageHeader: 20;
+$z-flyout: 10;

@@ -1,0 +1,432 @@
+@import "vendor/normalize";
+@import "0_vars";
+@import "1_utils";
+@import "2_fonts";
+@import "3_animations";
+@import "4_basic";
+// @import "icon";
+
+/* ==========================================================================
+   Section comment block
+   ========================================================================== */
+
+/* Sub-section comment block
+   ========================================================================== */
+
+/* Basic comment */
+@import url( "https://fonts.googleapis.com/css?family=Josefin+Sans:400" );
+@import url( "https://fonts.googleapis.com/css?family=Vast+Shadow:400" );
+
+$z-Panel: 14;
+$z-Toolbar: 13;
+$z-Splash: 12;
+$z-Intro: 11;
+$z-AddButton: 10;
+
+/* ==========================================================================
+   .xmas2016-Splash
+   ========================================================================== */
+
+.xmas2016-Splash{
+
+	&#{&}{
+		color: #FFF;
+		position: absolute;
+		z-index: $z-Splash;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: table;
+		width: 100%;
+		height: 100%;
+		background-color: #A81C1C;
+	}
+
+	&.v-leave,
+	&.v-leave-active {
+		opacity: 0;
+		transition: all 1.5s;
+	}
+
+	.xmas2016-Splash__Inner{
+		display: table-cell;
+		vertical-align: middle;
+		padding: 20px;
+	}
+
+	.xmas2016-Splash__Title{
+		font-family: 'Vast Shadow', cursive;
+		line-height: 1.2;
+		text-align: center;
+	}
+
+	.xmas2016-Splash__TitleMain{
+		font-size: 32px;
+	}
+
+	.xmas2016-Splash__TitleSub{
+		font-size: 24px;
+	}
+
+	.xmas2016-Splash__TitleLogo{
+		width: 200px;
+		height: 60px;
+		margin: 0 auto 10px;
+		background-image: url( "../../static/img/bg_01.svg" );
+	}
+
+	.xmas2016-Splash__Author{}
+
+
+	.xmas2016-Splash__StartButtonOuter{
+		text-align: center;
+		margin: 35px 0 10px;
+		position: relative;
+		z-index: 1;
+	}
+	.xmas2016-Splash__StartButton{
+		color: #fff;
+		font-size: 100%;
+		text-align: center;
+		cursor: pointer;
+		position: relative;
+		min-width: 160px;
+		padding: 12px 10px;
+		border: 1px solid #fff;
+		border-radius: 3px;
+		box-shadow: 0 0 0 0 rgba( #000, 0.1 ), 0 0 0 0 rgba( 255, 255, 255, 0.5 );
+		background-color: #EB9619;
+		transition:
+			color .2s,
+			letter-spacing .6s,
+			background-color .2s;
+		&:disabled{
+			color: #ccc;
+			background-color: #FFF;
+		}
+		&:hover:not( :disabled ){
+			color: #fff;
+			letter-spacing: 0.1em;
+			box-shadow: 0 0 2px 2px rgba( #000, 0.1 ), 0 0 0 10px rgba( 255, 255, 255, 0 );
+			background-color: #f4ad45;
+			transition:
+				color .2s,
+				letter-spacing .2s,
+				box-shadow .6s cubic-bezier( .25, .8, .5, 1 ),
+				background-color .2s;
+		}
+	}
+
+
+	.xmas2016-Splash__ProgressBar{
+		max-width: 300px;
+		padding: 0 10px;
+		margin: auto;
+	}
+
+	.xmas2016-Splash__ProgressBarIcon{
+		position: relative;
+		width: 60px;
+		height: 40px;
+		margin: 0 0 5px -30px;
+		background-image: url( "../../static/img/bg_02.svg" );
+		transition: left .5s;
+	}
+
+	.xmas2016-Splash__ProgressBarTrack{
+		width: 100%;
+		height: 14px;
+		border-radius: 6px;
+		background: #002D40;
+	}
+	.xmas2016-Splash__ProgressBarValue{
+		width: 0;
+		height: 100%;
+		border-radius: 6px;
+		background-color: #ade7ff;
+		transition: width .5s;
+	}
+	.xmas2016-Splash__ProgressBarPercentage{
+		color: #002D40;
+		font-size: 14px;
+		text-align: center;
+		position: relative;
+		width: 4em;
+		padding: 2px 0;
+		margin: 10px 0 0 -30px;
+		border-radius: 2px;
+		background: #FFF;
+		transition: left .5s;
+		&::before{
+			content: "";
+			position: absolute;
+			top: -5px;
+			left: calc( 50% - 5px );
+			display: block;
+			width: 10px;
+			height: 10px;
+			transform: rotate( 45deg );
+			background-color: inherit;
+		}
+	}
+	.xmas2016-Splash__ProgressBarData{
+		font-size: 12px;
+		text-align: center;
+	}
+
+}
+
+
+
+/* ==========================================================================
+   .xmas2016-Intro
+   ========================================================================== */
+.xmas2016-Intro{
+	&#{&}{
+		color: #FFF;
+		position: absolute;
+		z-index: $z-Intro;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: table;
+		width: 100%;
+		height: 100%;
+		background: rgba( 0, 0, 0, .5 );
+		transition-timing-function: ease;
+		transition-duration: 0.3s;
+		&.v-leave,
+		&.v-leave-active {
+			opacity: 0;
+			transform: scale( 0 );
+			transition-duration: 0.5s;
+		}
+	}
+	.xmas2016-Intro__Inner{
+		display: table-cell;
+		vertical-align: middle;
+		padding: 20px;
+	}
+	.xmas2016-Intro__Item{
+		text-align: center;
+	}
+	.xmas2016-Intro__ItemImage{
+		display: block;
+		width: 46px;
+		height: 46px;
+		margin: 0 auto 10px;
+	}
+}
+
+
+
+
+/* ==========================================================================
+   .xmas2016-AddButton
+   ========================================================================== */
+.xmas2016-AddButton{
+	&#{&}{
+		@include avoidselect();
+		$size: 60px;
+		color: #FFF;
+		font-weight: bold;
+		line-height: $size;
+		text-align: center;
+		cursor: pointer;
+		position: fixed;
+		z-index: $z-AddButton;
+		bottom: 20px;
+		left: calc( 50% - 30px );
+		width: $size;
+		height: $size;
+		padding: 0;
+		border: 1px solid #fff;
+		border-radius: 3px;
+		box-shadow: 0 0 0 0 rgba( 255, 255, 255, 0.5 );
+		background: rgba( 180, 180, 180, .4 );
+		transition: background-color .2s;
+		&:hover{
+			box-shadow: 0 0 0 10px rgba( 255, 255, 255, 0 );
+			background: rgba( 255, 255, 255, .4 );
+			transition:
+				background-color .2s,
+				box-shadow .6s cubic-bezier( .25, .8, .5, 1 );
+		}
+		&:active{
+			background-color: #FFF;
+		}
+	}
+}
+
+
+
+/* ==========================================================================
+   .xmas2016-Viewer
+   ========================================================================== */
+.xmas2016-Viewer{
+	&#{&}{
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+		height: 100vh;
+	}
+	.xmas2016-Viewer__Canvas{
+		-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+	}
+}
+
+
+/* ==========================================================================
+   .xmas2016-Info
+   ========================================================================== */
+
+.xmas2016-Info{
+	&#{&}{}
+	.xmas2016-Info__Toolbar{
+		position: fixed;
+		z-index: $z-Toolbar;
+		right: 10px;
+		bottom: 10px;
+	}
+	.xmas2016-Info__Button{
+		@include avoidselect();
+		$size: 30px;
+		color: #FFF;
+		line-height: $size;
+		text-align: center;
+		cursor: pointer;
+		box-sizing: content-box;
+		width: $size;
+		height: $size;
+		padding: 2px;
+		border: 1px solid #fff;
+		border-radius: 3px;
+		box-shadow: 0 0 0 0 rgba( 255, 255, 255, 0.5 );
+		background: rgba( 180, 180, 180, .4 );
+		transition: background-color .2s;
+		&:hover{
+			box-shadow: 0 0 0 10px rgba( 255, 255, 255, 0 );
+			background: rgba( 255, 255, 255, .4 );
+			transition:
+				background-color .2s,
+				box-shadow .6s cubic-bezier( .25, .8, .5, 1 );
+		}
+		&:active{
+			background-color: #FFF;
+		}
+		
+	}
+	.xmas2016-Intro__InfoIcon{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	// <transition type="transition" appear>
+	.xmas2016-Info__Panel{
+		position: absolute;
+		z-index: $z-Panel;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		padding: 20px;
+		justify-content: center;
+		align-items: center;
+		background: rgba( 0, 0, 0, 0.01 );
+
+		transition-timing-function: cubic-bezier( 0, 1.4, 1, 1 );
+		transition-duration: 0.35s;
+		&.v-enter,
+		&.v-leave-active {
+			opacity: 0;
+			transition-timing-function: ease;
+		}
+		&.v-leave-active {
+			transition-duration: 0.2s;
+		}
+	}
+	.xmas2016-Info__PanelInner{
+		color: #FFF;
+		box-sizing: border-box;
+		overflow: auto;
+		max-height: 100%;
+		padding: 20px;
+		border: 1px solid #000;
+		border-radius: 4px;
+		background: rgba( 0, 0, 0, .75 );
+		h2{
+			font-size: 18px;
+			margin: 0 0 10px;
+		}
+		ul{
+			font-size: 14px;
+			padding-left: 20px;
+			margin: 10px 0;
+		}
+		li{}
+		a{
+			color: #EB9619;
+		}
+	}
+	.xmas2016-Info__Panel{
+		.xmas2016-Info__PanelInner{
+			transform: scale( 1 );
+			transition-timing-function: cubic-bezier( 0, 1.4, 1, 1 );
+			transition-duration: 0.35s;
+		}
+		&.v-enter,
+		&.v-leave-active {
+			.xmas2016-Info__PanelInner{
+				opacity: 0;
+				transform: scale( 0 );
+				transition-timing-function: ease;
+			}
+		}
+		&.v-leave-active {
+			.xmas2016-Info__PanelInner{
+				transition-duration: 0.2s;
+			}
+		}
+	}
+	.xmas2016-Info__Heading{}
+	.xmas2016-Info__PanelCloseButtonOuter{
+		text-align: center;
+		margin: 20px 0 0;
+	}
+	.xmas2016-Info__PanelCloseButton{
+		color: #000;
+		font-size: 100%;
+		text-align: center;
+		cursor: pointer;
+		position: relative;
+		z-index: 1;
+		min-width: 160px;
+		padding: 12px 10px;
+		border: 1px solid #fff;
+		border-radius: 3px;
+		box-shadow: 0 0 0 0 rgba( #000, 0.1 ), 0 0 0 0 rgba( 255, 255, 255, 0.5 );
+		background-color: #ccc;
+		transition:
+			color .2s,
+			letter-spacing .6s,
+			background-color .2s;
+		&:hover{
+			letter-spacing: 0.1em;
+			box-shadow: 0 0 2px 2px rgba( #000, 0.1 ), 0 0 0 10px rgba( 255, 255, 255, 0 );
+			background-color: #FFF;
+			transition:
+				color .2s,
+				letter-spacing .2s,
+				box-shadow .6s cubic-bezier( .25, .8, .5, 1 ),
+				background-color .2s;
+		}
+
+	}
+}

@@ -1,0 +1,81 @@
+
+// media queries
+// ========================================================================== */
+
+@mixin mediaL () {
+  @media ( max-width: $breakpoint-base ) {
+    @content;
+  }
+}
+
+@mixin mediaM () {
+  @media ( max-width: $breakpoint-middle ) {
+    @content;
+  }
+}
+
+@mixin mediaS () {
+  @media ( max-width: $breakpoint-small ) {
+    @content;
+  }
+}
+
+// filter for only less than IE8 (CSS Hack)
+// ==========================================================================
+@mixin ie8 () {
+  // only for IE8
+  @media \0screen {
+    @content;
+  }
+}
+
+// filter for only less than IE9 (CSS Hack)
+// ==========================================================================
+@mixin ie9 () {
+  // only for IE9
+  @media (min-width:0\0) and (min-resolution:.001dpcm) {
+    @content;
+  }
+}
+
+// clearfix
+// ========================================================================== */
+@mixin clearfix() {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// wordbreak
+// ========================================================================== */
+@mixin avoidselect {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+// wordbreak
+// ========================================================================== */
+@mixin wordbreak () {
+  white-space: normal;
+  word-break: break-word;
+  word-break: break-all;
+  hyphens: auto;
+}
+
+
+// tableToBlock
+// ========================================================================== */
+@mixin tableToBlock () {
+  table, tbody, tr{
+    @include clearfix();
+    display: block;
+  }
+  th, td{
+    float: left;
+    clear: left;
+  }
+}
