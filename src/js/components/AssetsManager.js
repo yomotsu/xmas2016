@@ -37,7 +37,7 @@ export default Vue.extend( {
 
 			xhr.onload = ( e ) => {
 
-				this.$emit( 'loadProgress', e.loaded, e.total );
+				this.$emit( 'loadProgress', e.loaded, e.loaded );
 
 				zipFileManager.extract( new Int8Array( xhr.response ) ).then( () => {
 
